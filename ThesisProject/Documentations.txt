@@ -1,0 +1,72 @@
+==========================================================================================
+	 2D TRANSIENT STATE NAVIER STOKES SOLVER WITH MATLAB VISUALIZATION DOCUMENTATIONS
+==========================================================================================
+
+Header Files
+--------------
+"DataStructure.h"
+	Length			: Length of the rectangular domain (in m)
+	Height			: Height of the rectangular domain (in m)
+ 	iMax			: Maximum columns/divisions in the x direction
+	jMax			: Maximum rows/divisions in the y direction
+	Hydraulic_Dia	: Hydraulic diameter for rectangular pipes; Calculated in the NavierStokesMain.cpp
+	delX			: Cell Distance in Y direction
+	delY			: Cell Distance in Y direction
+	upwind			: Upwind differencing factor for discretization; should be between 0 and 1 where upwind = 0 means central differencing and 1 donor-cell
+
+	struct Time
+	t				: Current time (s)
+	t_end			: End time/ Full Period (s)
+	n				: time step at each loop (n = 1,2,3 etc ... )
+	timeStep		: delta time delt (s)
+
+	struct SOR
+	it				: SOR iterator for pressure correction in SOR_cycle.h
+	itmax			: Maximum number of SOR iteration
+	eps				: Stepping tolerance 
+	omega			: SOR factor where omega = 1 yield the Gauss-Seidel Method. omega should be chosen between [0,2]
+
+	struct FLuidProps
+	density			: Density of the fluid (kg/m^3)
+	viscocity		: Viscosity of the fluid (kg/m-s)
+	Inflow_Velocity	: Inlet velocity (m/s), used to calculate the Reynolds number
+
+	struct Problem
+	Rey				: Reynolds number calculated in NavierStokesMain.cpp
+	Gx				: Gravity in X direction (m/s^2)
+	Gy				: Gravity in Y direction (m/s^2)
+	Ui				: Initial U velocity in x direction at time t = 0 (m/s)
+	Vi				: Initial V velocity in Y direction at time t = 0 (m/s)
+	Pi				: Initial P Pressure at time t = 0 (Pa)
+
+"allocateMemory.h"
+	_1DMATRIX		: Allocate memory at runtime for a one dimensional matrix
+	_2DMATRIC		: Allocate memory at runtime for a two dimensional matrix
+	FREE_RMATRIX	: Frees memory allocated by array
+
+"Compute_F_G.h"
+	Compute_FG		: Computes the F and G equations (Discrete momentum equations)
+
+"Compute_NextUV"
+	Compute_NextUV	: Computes the next values for the U and V velocities at timestep n+1
+
+"Compute_RHS"		: Compute the right hand side of the poisson's equation
+
+"Equation.h"		: The momentum, time, and continuity equations in discrete form
+
+"Helpers.h"
+	Display_Matrix	: Used to display the matrix in the console (for debugging)
+	DrawHorizontalRule: Draws a simple horizontal rule 
+	sum_pow2		: Template for adding and power
+
+"SOR_cycle.h"
+	Compute_SOR		: Perform SOR for pressure correction at given timestep
+
+"Write.h"
+	cleanFile		: Cleans the Output.txt (or any text file) at runtime
+	Matlab_Write	: Writes the output of U, V & P at given time step to let matlab read and plot these matrices
+	write_TimeStep	: Writes the given timestep in Output.txt
+	writeMAT		: Writes any given Matrix in specified file (default: Output.txt)
+
+For more info about the subject of transient analysis of fluid flow, please refer to chapter 3
+in Numerical Simulation in Fluid Dynamics by Griebel et.al 
